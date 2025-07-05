@@ -51,9 +51,12 @@ function LandingPage() {
               </h3>
 
               <p className="mt-4 text-gray-100">
-                Hangman is a word-guessing game where players guess letters to
-                reveal a hidden word. Incorrect guesses lead to drawing parts of
-                a hangman. Six wrong guesses result in loss.
+                Authentication system including features like user
+                registration, secure login/logout, password hashing, and email
+                or OTP verification. It also supports password reset,
+                token-based authentication (e.g., JWT), and may include
+                role-based access and two-factor authentication for enhanced
+                security.
               </p>
             </div>
 

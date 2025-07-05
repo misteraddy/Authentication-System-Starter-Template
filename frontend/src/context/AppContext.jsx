@@ -8,6 +8,7 @@ export const AppContextProvider = ({ children }) => {
   const backendURL = BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const getUserData = async () => {
     try {
@@ -19,10 +20,13 @@ export const AppContextProvider = ({ children }) => {
         setUserData(response.data);
         setIsLoggedIn(true);
       } else {
-        alert("Unable to get user data");
+        setIsLoggedIn(false);
       }
     } catch (error) {
       console.error("Error fetching user data:", error.message);
+      setIsLoggedIn(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,6 +34,7 @@ export const AppContextProvider = ({ children }) => {
     backendURL,
     isLoggedIn,
     userData,
+    loading,
     setIsLoggedIn,
     setUserData,
     getUserData,

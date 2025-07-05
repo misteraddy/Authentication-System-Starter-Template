@@ -35,7 +35,7 @@ function ResetPassword({
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="mb-6"
+              className="mb-6 "
             />
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Sending OTP..." : "Send OTP"}

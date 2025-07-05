@@ -1,25 +1,50 @@
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { ThemeProvider } from "./pages/DarkMode/ThemeProvider";
+
 import LandingPage from "./pages/LandingPage";
 import RootLayout from "./pages/Navbar/RootLayout";
-import { Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "./pages/DarkMode/ThemeProvider";
 import HomeContainer from "./pages/Home/HomeContainer";
 import EmailVerifyContainer from "./pages/EmailVerify/EmailVerifyContainer";
 import ResetPasswordContainer from "./pages/ResetPassword/ResetPasswordContainer";
 
+import { AppContext } from "./context/AppContext";
+import ProtectedRoute from "./components/ProtectedLayout";
+import Loader from "./pages/Loader/Loader";
 
 const App = () => {
+  const { isLoggedIn, getUserData, loading } = useContext(AppContext);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
     <ThemeProvider defaultTheme="light">
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/"
-          element={<RootLayout />}
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={!isLoggedIn ? <LandingPage /> : <Navigate to="/home" replace />}
+        />
+        <Route path="/reset-password" element={<ResetPasswordContainer />} />
+
+        {/* Protected Route Group under RootLayout */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <RootLayout />
+            </ProtectedRoute>
+          }
         >
-          <Route path="/home" element={<HomeContainer />} />
+          <Route path="home" element={<HomeContainer />} />
+          <Route path="email-verify" element={<EmailVerifyContainer />} />
+          {/* Add more child routes here */}
         </Route>
-        <Route path="/email-verify" element={<EmailVerifyContainer/>}/>
-        <Route path="/reset-password" element={<ResetPasswordContainer/>}/>
       </Routes>
     </ThemeProvider>
   );

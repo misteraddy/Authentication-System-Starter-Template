@@ -44,7 +44,7 @@ const SignIn = ({
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <Link to="#" className="text-sm text-gray-600 dark:text-gray-200 hover:underline">
+            <Link to="/reset-password" className="text-sm text-gray-600 dark:text-gray-200 hover:underline">
               Forget Password?
             </Link>
 
